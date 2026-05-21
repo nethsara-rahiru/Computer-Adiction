@@ -76,7 +76,7 @@
             <button class="btn btn-outline" id="theme-toggle">
               <i class="ph ph-moon"></i>
             </button>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" id="new-session-btn">
               <i class="ph ph-plus"></i> New Session
             </button>
           </div>
@@ -397,6 +397,33 @@
         </div>
       </main>
         </div>
+    <!-- New Session Modal -->
+    <div class="modal-overlay" id="session-modal">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h2>Start New Session</h2>
+          <button class="btn-icon" id="close-modal-btn"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Focus Duration</label>
+            <select class="input-field" style="width: 100%;">
+              <option>25 Minutes (Pomodoro)</option>
+              <option>50 Minutes (Deep Work)</option>
+              <option>90 Minutes (Flow State)</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-top: 16px;">
+            <label>Session Goal</label>
+            <input type="text" class="input-field" placeholder="What do you want to accomplish?" />
+          </div>
+          <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button class="btn btn-primary" style="flex: 1;" id="start-new-session-btn">Start Focusing</button>
+            <button class="btn btn-outline" style="flex: 1;" id="cancel-modal-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
       </div>
     </div>
     <script type="module" src="./main.js"></script>

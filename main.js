@@ -163,3 +163,35 @@ previewBtns.forEach(btn => {
     previewWrapper.className = `device-preview-wrapper ${device}`;
   });
 });
+
+// Modal Logic
+const newSessionBtn = document.getElementById('new-session-btn');
+const sessionModal = document.getElementById('session-modal');
+const closeModalBtn = document.getElementById('close-modal-btn');
+const cancelModalBtn = document.getElementById('cancel-modal-btn');
+const startNewSessionBtn = document.getElementById('start-new-session-btn');
+
+function openModal() {
+  if(sessionModal) sessionModal.classList.add('active');
+}
+
+function closeModal() {
+  if(sessionModal) sessionModal.classList.remove('active');
+}
+
+if(newSessionBtn) newSessionBtn.addEventListener('click', openModal);
+if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+if(cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+if(startNewSessionBtn) startNewSessionBtn.addEventListener('click', () => {
+  // Add logic to start session here
+  closeModal();
+});
+
+// Close modal when clicking outside
+if(sessionModal) {
+  sessionModal.addEventListener('click', (e) => {
+    if(e.target === sessionModal) {
+      closeModal();
+    }
+  });
+}
