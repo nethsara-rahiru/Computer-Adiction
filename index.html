@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZenSpace - Digital Wellbeing Dashboard</title>
+    <meta name="description" content="A solution for computer addiction by tracking screen time and enforcing focus sessions." />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  </head>
+  <body>
+    <!-- Preview Toolbar -->
+    <div class="preview-toolbar">
+      <span style="color: var(--text-secondary); font-size: 14px; font-weight: 500;">Layout Preview:</span>
+      <button class="preview-btn active" data-device="desktop"><i class="ph ph-desktop"></i> Desktop</button>
+      <button class="preview-btn" data-device="tablet"><i class="ph ph-device-tablet"></i> Tablet</button>
+      <button class="preview-btn" data-device="mobile"><i class="ph ph-device-mobile"></i> Mobile</button>
+    </div>
+    
+    <div class="preview-area">
+      <div class="device-preview-wrapper desktop" id="preview-wrapper">
+        <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="ph ph-flower-lotus"></i>
+          <span>ZenSpace</span>
+        </div>
+        <nav class="menu">
+          <a href="#" class="menu-item active" data-target="dashboard">
+            <i class="ph ph-squares-four"></i>
+            Dashboard
+          </a>
+          <a href="#" class="menu-item" data-target="focus">
+            <i class="ph ph-timer"></i>
+            Focus Mode
+          </a>
+          <a href="#" class="menu-item" data-target="analytics">
+            <i class="ph ph-chart-line-up"></i>
+            Analytics
+          </a>
+          <a href="#" class="menu-item" data-target="app-blocker">
+            <i class="ph ph-shield-check"></i>
+            App Blocker
+          </a>
+          <a href="#" class="menu-item" data-target="settings">
+            <i class="ph ph-gear"></i>
+            Settings
+          </a>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="User Profile" />
+            <div class="user-info">
+              <span class="user-name">Alex Smith</span>
+              <span class="user-status">On a 5-day streak!</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="top-header">
+          <div class="header-titles">
+            <h1>Good Morning, Alex!</h1>
+            <p>You've successfully reclaimed 2 hours of focus time today.</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-outline" id="theme-toggle">
+              <i class="ph ph-moon"></i>
+            </button>
+            <button class="btn btn-primary">
+              <i class="ph ph-plus"></i> New Session
+            </button>
+          </div>
+        </header>
+
+        <!-- TABS CONTAINER -->
+        <div class="tabs-container">
+          
+          <!-- DASHBOARD TAB -->
+          <div id="dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+              <!-- Screen Time Widget -->
+              <div class="card glass-card span-2">
+                <div class="card-header">
+                  <h2>Screen Time</h2>
+                  <select class="dropdown">
+                    <option>Today</option>
+                    <option>This Week</option>
+                  </select>
+                </div>
+                <div class="card-body screen-time-body">
+                  <div class="time-display">
+                    <span class="time-large">4h 20m</span>
+                    <span class="time-trend text-success"><i class="ph ph-trend-down"></i> -15% from yesterday</span>
+                  </div>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar-label">
+                      <span>Productive</span>
+                      <span>70%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 70%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Wellness Score Widget -->
+              <div class="card glass-card">
+                <div class="card-header">
+                  <h2>Wellbeing Score</h2>
+                </div>
+                <div class="card-body center-flex">
+                  <div class="circular-chart">
+                    <svg viewBox="0 0 36 36" class="circular-svg">
+                      <path class="circle-bg"
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      <path class="circle-progress"
+                        stroke-dasharray="85, 100"
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      <text x="18" y="20.35" class="percentage">85</text>
+                    </svg>
+                    <p class="chart-label">Excellent!</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Focus Timer Widget -->
+              <div class="card glass-card span-2">
+                <div class="card-header">
+                  <h2>Deep Focus Timer</h2>
+                </div>
+                <div class="card-body focus-timer">
+                  <div class="timer-display" id="timer-display">25:00</div>
+                  <div class="timer-controls">
+                    <button class="btn btn-primary" id="start-btn"><i class="ph ph-play"></i> Start</button>
+                    <button class="btn btn-outline" id="pause-btn"><i class="ph ph-pause"></i> Pause</button>
+                    <button class="btn btn-outline" id="reset-btn"><i class="ph ph-arrow-counter-clockwise"></i> Reset</button>
+                  </div>
+                  <p class="timer-message" id="timer-message">Ready to focus? Distracting apps will be blocked.</p>
+                </div>
+              </div>
+
+              <!-- AI Time Breakdown Widget -->
+              <div class="card glass-card">
+                <div class="card-header">
+                  <h2 style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-magic-wand" style="color: var(--accent-primary);"></i> AI Categories Used</h2>
+                  <button class="btn-icon"><i class="ph ph-dots-three"></i></button>
+                </div>
+                <div class="card-body app-list">
+                  <div class="app-item">
+                    <div class="app-icon" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9;"><i class="ph ph-briefcase"></i></div>
+                    <div class="app-details">
+                      <span class="app-name">Productivity</span>
+                      <span class="app-time">2h 15m spent</span>
+                    </div>
+                    <div style="font-weight: 600; font-size: 14px;">52%</div>
+                  </div>
+                  <div class="app-item">
+                    <div class="app-icon" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7;"><i class="ph ph-books"></i></div>
+                    <div class="app-details">
+                      <span class="app-name">Educational</span>
+                      <span class="app-time">45m spent</span>
+                    </div>
+                    <div style="font-weight: 600; font-size: 14px;">17%</div>
+                  </div>
+                  <div class="app-item">
+                    <div class="app-icon" style="background: rgba(244, 63, 94, 0.2); color: #fda4af;"><i class="ph ph-popcorn"></i></div>
+                    <div class="app-details">
+                      <span class="app-name">Entertainment</span>
+                      <span class="app-time">50m spent</span>
+                    </div>
+                    <div style="font-weight: 600; font-size: 14px;">19%</div>
+                  </div>
+                  <div class="app-item">
+                    <div class="app-icon" style="background: rgba(139, 92, 246, 0.2); color: #c4b5fd;"><i class="ph ph-game-controller"></i></div>
+                    <div class="app-details">
+                      <span class="app-name">Games</span>
+                      <span class="app-time">30m spent</span>
+                    </div>
+                    <div style="font-weight: 600; font-size: 14px; color: var(--warning);">12%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FOCUS MODE TAB -->
+          <div id="focus" class="tab-content">
+            <div class="dashboard-grid">
+              <div class="card glass-card span-2">
+                <div class="card-header">
+                  <h2>Deep Work Session</h2>
+                </div>
+                <div class="card-body focus-timer center-flex" style="padding: 60px 0;">
+                  <div class="timer-display" id="main-timer-display" style="font-size: 96px;">50:00</div>
+                  <div class="timer-controls">
+                    <button class="btn btn-primary" id="main-start-btn"><i class="ph ph-play"></i> Start Session</button>
+                    <button class="btn btn-outline" id="main-pause-btn"><i class="ph ph-pause"></i> Pause</button>
+                    <button class="btn btn-outline" id="main-reset-btn"><i class="ph ph-arrow-counter-clockwise"></i> Reset</button>
+                  </div>
+                  <p class="timer-message" id="main-timer-message" style="margin-top: 20px;">Eliminate distractions. Stay focused.</p>
+                </div>
+              </div>
+              <div class="card glass-card">
+                 <div class="card-header">
+                   <h2>Session History</h2>
+                 </div>
+                 <div class="card-body">
+                   <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; flex-grow: 1;">
+                     <li style="display: flex; justify-content: space-between; padding: 12px; background: rgba(0,0,0,0.1); border-radius: 8px;">
+                        <span>Morning Focus</span> <span class="text-success">25m</span>
+                     </li>
+                     <li style="display: flex; justify-content: space-between; padding: 12px; background: rgba(0,0,0,0.1); border-radius: 8px;">
+                        <span>Reading</span> <span class="text-success">45m</span>
+                     </li>
+                     <li style="display: flex; justify-content: space-between; padding: 12px; background: rgba(0,0,0,0.1); border-radius: 8px;">
+                        <span>Deep Work</span> <span class="text-success">60m</span>
+                     </li>
+                   </ul>
+                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANALYTICS TAB -->
+          <div id="analytics" class="tab-content">
+            <div class="dashboard-grid">
+              <div class="card glass-card span-2">
+                <div class="card-header">
+                  <h2>Weekly Screen Time</h2>
+                </div>
+                <div class="card-body center-flex" style="min-height: 250px; align-items: flex-end; justify-content: space-around; padding-top: 40px; flex-direction: row;">
+                  <!-- Dummy Bar Chart -->
+                  <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div style="width: 40px; height: 120px; background: var(--accent-primary); border-radius: 6px 6px 0 0;" title="Monday: 3h"></div>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Mon</span>
+                  </div>
+                  <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div style="width: 40px; height: 180px; background: var(--accent-secondary); border-radius: 6px 6px 0 0;" title="Tuesday: 4.5h"></div>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Tue</span>
+                  </div>
+                  <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div style="width: 40px; height: 90px; background: var(--accent-primary); border-radius: 6px 6px 0 0;" title="Wednesday: 2h"></div>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Wed</span>
+                  </div>
+                  <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div style="width: 40px; height: 220px; background: var(--danger); border-radius: 6px 6px 0 0;" title="Thursday: 5.5h"></div>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Thu</span>
+                  </div>
+                  <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div style="width: 40px; height: 150px; background: var(--accent-primary); border-radius: 6px 6px 0 0;" title="Friday: 3.5h"></div>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Fri</span>
+                  </div>
+                  <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div style="width: 40px; height: 250px; background: var(--warning); border-radius: 6px 6px 0 0;" title="Saturday: 6h"></div>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Sat</span>
+                  </div>
+                  <div style="display:flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div style="width: 40px; height: 100px; background: var(--success); border-radius: 6px 6px 0 0;" title="Sunday: 2.5h"></div>
+                    <span style="color: var(--text-secondary); font-size: 12px;">Sun</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card glass-card">
+                 <div class="card-header">
+                   <h2>Top Distractions</h2>
+                 </div>
+                 <div class="card-body" style="justify-content: center; gap: 24px;">
+                   <div class="progress-bar-container">
+                     <div class="progress-bar-label"><span>Instagram</span><span>2h 15m</span></div>
+                     <div class="progress-bar"><div class="progress-fill" style="width: 65%; background: linear-gradient(90deg, #f43f5e, #e11d48);"></div></div>
+                   </div>
+                   <div class="progress-bar-container">
+                     <div class="progress-bar-label"><span>YouTube</span><span>1h 40m</span></div>
+                     <div class="progress-bar"><div class="progress-fill" style="width: 45%; background: linear-gradient(90deg, #ef4444, #b91c1c);"></div></div>
+                   </div>
+                   <div class="progress-bar-container">
+                     <div class="progress-bar-label"><span>TikTok</span><span>55m</span></div>
+                     <div class="progress-bar"><div class="progress-fill" style="width: 25%; background: linear-gradient(90deg, #0f172a, #334155);"></div></div>
+                   </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- APP BLOCKER TAB -->
+          <div id="app-blocker" class="tab-content">
+            <div class="dashboard-grid">
+               <!-- AI Auto-Categorizer Widget -->
+               <div class="card glass-card span-2" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(6, 182, 212, 0.05)); border: 1px solid rgba(99, 102, 241, 0.3);">
+                 <div class="card-header">
+                   <h2 style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-magic-wand" style="color: var(--accent-primary);"></i> AI Categorization</h2>
+                   <button class="btn btn-primary btn-sm" style="padding: 8px 16px;"><i class="ph ph-arrows-clockwise"></i> Re-Scan</button>
+                 </div>
+                 <div class="card-body">
+                   <p style="color: var(--text-secondary); margin-bottom: 20px;">ZenSpace AI has scanned your system and automatically categorized <strong>45 apps</strong> into productivity, educational, games, and entertainment to optimize your focus rules.</p>
+                   <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                     <span style="background: rgba(139, 92, 246, 0.2); color: #c4b5fd; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px;"><i class="ph ph-game-controller"></i> Games (12)</span>
+                     <span style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px;"><i class="ph ph-books"></i> Educational (4)</span>
+                     <span style="background: rgba(244, 63, 94, 0.2); color: #fda4af; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px;"><i class="ph ph-popcorn"></i> Entertainment (5)</span>
+                     <span style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px;"><i class="ph ph-briefcase"></i> Productivity (24)</span>
+                   </div>
+                 </div>
+               </div>
+
+               <div class="card glass-card span-2">
+                 <div class="card-header">
+                   <h2>Restriction Rules</h2>
+                   <button class="btn btn-outline btn-sm" style="padding: 8px 16px;"><i class="ph ph-plus"></i> Add Manual Rule</button>
+                 </div>
+                 <div class="card-body app-list">
+                    <div class="app-item">
+                      <div class="app-icon social"><i class="ph ph-instagram-logo"></i></div>
+                      <div class="app-details">
+                        <span class="app-name" style="display: flex; align-items: center; gap: 6px;">Instagram <span style="font-size: 10px; padding: 2px 6px; border-radius: 4px; background: rgba(244, 63, 94, 0.2); color: #fda4af; font-weight: 600;">Entertainment</span></span>
+                        <span class="app-time">Limit: 30 mins/day</span>
+                      </div>
+                      <div class="toggle-switch active"><div class="toggle-knob"></div></div>
+                    </div>
+                    <div class="app-item">
+                      <div class="app-icon social" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="ph ph-book-open"></i></div>
+                      <div class="app-details">
+                        <span class="app-name" style="display: flex; align-items: center; gap: 6px;">Duolingo <span style="font-size: 10px; padding: 2px 6px; border-radius: 4px; background: rgba(16, 185, 129, 0.2); color: #6ee7b7; font-weight: 600;">Educational</span></span>
+                        <span class="app-time">Allowed</span>
+                      </div>
+                      <div class="toggle-switch"><div class="toggle-knob"></div></div>
+                    </div>
+                    <div class="app-item">
+                      <div class="app-icon games"><i class="ph ph-game-controller"></i></div>
+                      <div class="app-details">
+                        <span class="app-name" style="display: flex; align-items: center; gap: 6px;">Steam Games <span style="font-size: 10px; padding: 2px 6px; border-radius: 4px; background: rgba(139, 92, 246, 0.2); color: #c4b5fd; font-weight: 600;">Games</span></span>
+                        <span class="app-time">Blocked before 6 PM</span>
+                      </div>
+                      <div class="toggle-switch"><div class="toggle-knob"></div></div>
+                    </div>
+                 </div>
+               </div>
+            </div>
+          </div>
+
+          <!-- SETTINGS TAB -->
+          <div id="settings" class="tab-content">
+            <div class="dashboard-grid">
+               <div class="card glass-card span-2">
+                 <div class="card-header">
+                   <h2>Preferences</h2>
+                 </div>
+                 <div class="card-body" style="gap: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div>
+                        <h3 style="font-size: 16px; margin-bottom: 4px;">Strict Mode</h3>
+                        <p style="font-size: 13px; color: var(--text-secondary);">Cannot bypass limits once set for the day.</p>
+                      </div>
+                      <div class="toggle-switch active"><div class="toggle-knob"></div></div>
+                    </div>
+                    <hr style="border: 0; height: 1px; background: var(--card-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div>
+                        <h3 style="font-size: 16px; margin-bottom: 4px;">Notifications</h3>
+                        <p style="font-size: 13px; color: var(--text-secondary);">Remind me to take breaks every 60 minutes.</p>
+                      </div>
+                      <div class="toggle-switch active"><div class="toggle-knob"></div></div>
+                    </div>
+                    <hr style="border: 0; height: 1px; background: var(--card-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div>
+                        <h3 style="font-size: 16px; margin-bottom: 4px;">Daily Goal</h3>
+                        <p style="font-size: 13px; color: var(--text-secondary);">Target screen time per day.</p>
+                      </div>
+                      <select class="dropdown" style="padding: 8px 16px;">
+                        <option>4 Hours</option>
+                        <option>6 Hours</option>
+                        <option>8 Hours</option>
+                      </select>
+                    </div>
+                 </div>
+               </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
